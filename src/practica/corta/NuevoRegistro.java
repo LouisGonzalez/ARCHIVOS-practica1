@@ -7,6 +7,7 @@ package practica.corta;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 /**
  *
  * @author luisGonzalez
@@ -14,15 +15,19 @@ import javax.swing.JOptionPane;
 public class NuevoRegistro extends javax.swing.JDialog {
 
     private String[] datos;
+    private JTextArea cajaTexto;
     private String texto = "";
+    private ArrayList<Datos> listDatos;
     
     /**
      * Creates new form NuevoRegistro
      */
-    public NuevoRegistro(java.awt.Frame parent, boolean modal) {
+    public NuevoRegistro(java.awt.Frame parent, boolean modal, JTextArea cajaTexto, ArrayList<Datos> listDatos) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+        this.cajaTexto = cajaTexto;
+        this.listDatos = listDatos;
     }
 
     /**
@@ -88,10 +93,18 @@ public class NuevoRegistro extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        ArrayList<Datos> aux = new ArrayList<>();
         datos = txtDatos.getText().split("\\|");
         texto = datos[0] + "|" + datos[1] + "|" + datos[2] + "|" + datos[3];
         Inicio.textoOficial += texto+"\n";
-        JOptionPane.showMessageDialog(null, "Dato guardado con exito");
+        Almacenamiento almacenaje = new Almacenamiento();
+        aux = almacenaje.ordenamientoDatos(Inicio.textoOficial, aux);
+        listDatos.clear();
+        for (int i = 0; i < aux.size(); i++) {
+            listDatos.add(aux.get(i));
+        }
+        aux.clear();
+        cajaTexto.setText(Inicio.textoOficial);
         this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 

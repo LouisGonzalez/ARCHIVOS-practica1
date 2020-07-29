@@ -20,7 +20,8 @@ public class Inicio extends javax.swing.JFrame {
     private String binarioActual = "";
     private Archivos archivo = new Archivos();
     public static String textoOficial;
-    
+    public ArrayList<Datos> listDatos = new ArrayList<>();
+    private ArrayList<Integer> listBusqueda = new ArrayList<>();
 
     /**
      * Creates new form Inicio
@@ -44,6 +45,14 @@ public class Inicio extends javax.swing.JFrame {
         txtTexto = new javax.swing.JTextArea();
         btnNuevo = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
+        lblBuscar = new javax.swing.JLabel();
+        txtBuscar = new javax.swing.JTextField();
+        comboBusqueda = new javax.swing.JComboBox<>();
+        btnBuscar = new javax.swing.JButton();
+        btnLista = new javax.swing.JButton();
+        comboOrdenar = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        btnOrdenar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,42 +81,110 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
+        lblBuscar.setText("Buscar:");
+
+        comboBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Telefono", "Red Social 1", "Red Social 2" }));
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        btnLista.setText("Volver a ver la lista");
+        btnLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListaActionPerformed(evt);
+            }
+        });
+
+        comboOrdenar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Telefono", "Red Social 1", "Red Social 2" }));
+
+        jLabel1.setText("Ordenar:");
+
+        btnOrdenar.setText("Ordenar");
+        btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap(33, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAbrir, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(85, 85, 85)
-                            .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(comboOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62)
+                        .addComponent(btnOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnAbrir, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                                    .addComponent(btnLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(22, 22, 22)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(comboBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtBuscar))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(72, 72, 72)
+                                .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(39, 39, 39))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnAbrir)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuardar)
-                    .addComponent(btnNuevo))
-                .addContainerGap(38, Short.MAX_VALUE))
+                    .addComponent(btnAbrir)
+                    .addComponent(lblBuscar)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar)
+                    .addComponent(btnLista))
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnOrdenar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNuevo)
+                    .addComponent(btnGuardar))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        NuevoRegistro nuevo = new NuevoRegistro(null, true);
-        nuevo.setVisible(true);
+        if (binarioActual.equals("")) {
+            JOptionPane.showMessageDialog(null, "No tienes ningun archivo abierto actualmente");
+        } else {
+            NuevoRegistro nuevo = new NuevoRegistro(null, true, txtTexto, listDatos);
+            nuevo.setVisible(true);
+        }
+
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirActionPerformed
@@ -121,20 +198,17 @@ public class Inicio extends javax.swing.JFrame {
             System.out.println("getSelectedFile(): " + chooser.getSelectedFile());
             archivoEntrada = new File(chooser.getSelectedFile().getAbsolutePath());
             String titulo = archivoEntrada.toString();
+            binarioActual = archivoEntrada.toString();
             if (titulo.endsWith(".dat")) {
-                JOptionPane.showMessageDialog(null, "Archivo abierto");
                 String texto = "";
-                String texto2 = "";
-                texto2 = archivo.leerArchivo(titulo);
-                txtTexto.setText(texto2);
+                texto = archivo.leerArchivo(titulo);
+                textoOficial = texto;
+                txtTexto.setText(texto);
+                Almacenamiento almacenaje = new Almacenamiento();
+                listDatos = almacenaje.ordenamientoDatos(texto, listDatos);
             } else {
                 JOptionPane.showMessageDialog(null, "No es posible abrir este tipo de texto");
-                
-                
-                
-                
-                
-                
+
             }
         }
     }//GEN-LAST:event_btnAbrirActionPerformed
@@ -145,16 +219,115 @@ public class Inicio extends javax.swing.JFrame {
             CrearArchivo creacion = new CrearArchivo(null, true);
             creacion.setVisible(true);
         } else {
-
+            archivo.guardarArchivo2(textoOficial, binarioActual);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        if (txtBuscar.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "No ha escrito nada dentro del campo de busqueda.");
+        } else {
+            if (comboBusqueda.getSelectedItem().equals("Nombre")) {
+                for (int i = 0; i < listDatos.size(); i++) {
+                    if (listDatos.get(i).getNombre().equals(txtBuscar.getText())) {
+                        listBusqueda.add(i);
+                    }
+                }
+            } else if (comboBusqueda.getSelectedItem().equals("Telefono")) {
+                for (int i = 0; i < listDatos.size(); i++) {
+                    if (listDatos.get(i).getNumero().equals(txtBuscar.getText())) {
+                        listBusqueda.add(i);
+                    }
+                }
+            } else if (comboBusqueda.getSelectedItem().equals("Red Social 1")) {
+                for (int i = 0; i < listDatos.size(); i++) {
+                    if (listDatos.get(i).getRedSocial1().equals(txtBuscar.getText())) {
+                        listBusqueda.add(i);
+                    }
+                }
+            } else if (comboBusqueda.getSelectedItem().equals("Red Social 2")) {
+                for (int i = 0; i < listDatos.size(); i++) {
+                    if (listDatos.get(i).getRedSocial2().equals(txtBuscar.getText())) {
+                        listBusqueda.add(i);
+                    }
+                }
+            }
+            String nuevoTexto = "";
+            for (int i = 0; i < listBusqueda.size(); i++) {
+                nuevoTexto += listDatos.get(listBusqueda.get(i)).getNombre() + "|" + listDatos.get(listBusqueda.get(i)).getNumero() + "|" + listDatos.get(listBusqueda.get(i)).getRedSocial1() + "|" + listDatos.get(listBusqueda.get(i)).getRedSocial2() + "\n";
+            }
+            txtTexto.setText(nuevoTexto);
+        }
+        listBusqueda.clear();
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListaActionPerformed
+        txtTexto.setText(textoOficial);
+    }//GEN-LAST:event_btnListaActionPerformed
+
+    private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
+        if (comboOrdenar.getSelectedItem().equals("Nombre")) {
+            for (int i = 0; i < listDatos.size()-1; i++) {
+                for (int j = 0; j < listDatos.size()-1; j++) {
+                    if (listDatos.get(j).getNombre().compareTo(listDatos.get(j + 1).getNombre()) > 0) {
+                        Datos aux = listDatos.get(j);
+                        listDatos.set(j, listDatos.get(j + 1));
+                        listDatos.set(j + 1, aux);
+                    }
+                }
+            }
+        } else if (comboOrdenar.getSelectedItem().equals("Telefono")) {
+            for (int i = 0; i < listDatos.size()-1; i++) {
+                for (int j = 0; j < listDatos.size()-1; j++) {
+                    if (listDatos.get(j).getNumero().compareTo(listDatos.get(j + 1).getNumero()) > 0) {
+                        Datos aux = listDatos.get(j);
+                        listDatos.set(j, listDatos.get(j + 1));
+                        listDatos.set(j + 1, aux);
+                    }
+                }
+            }
+        } else if (comboOrdenar.getSelectedItem().equals("Red Social 1")) {
+            for (int i = 0; i < listDatos.size()-1; i++) {
+                for (int j = 0; j < listDatos.size()-1; j++) {
+                    if (listDatos.get(j).getRedSocial1().compareTo(listDatos.get(j + 1).getRedSocial1()) > 0) {
+                        Datos aux = listDatos.get(j);
+                        listDatos.set(j, listDatos.get(j + 1));
+                        listDatos.set(j + 1, aux);
+                    }
+                }
+            }
+        } else if (comboOrdenar.getSelectedItem().equals("Red Social 2")) {
+            for (int i = 0; i < listDatos.size()-1; i++) {
+                for (int j = 0; j < listDatos.size()-1; j++) {
+                    if (listDatos.get(j).getRedSocial2().compareTo(listDatos.get(j + 1).getRedSocial2()) > 0) {
+                        Datos aux = listDatos.get(j);
+                        listDatos.set(j, listDatos.get(j + 1));
+                        listDatos.set(j + 1, aux);
+                    }
+                }
+            }
+        }
+        textoOficial = "";
+        for (int i = 0; i < listDatos.size(); i++) {
+            textoOficial += listDatos.get(i).getNombre()+"|"+listDatos.get(i).getNumero()+"|"+listDatos.get(i).getRedSocial1()+"|"+listDatos.get(i).getRedSocial2()+"\n";
+        }
+        txtTexto.setText(textoOficial);
+    }//GEN-LAST:event_btnOrdenarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbrir;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnLista;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnOrdenar;
+    private javax.swing.JComboBox<String> comboBusqueda;
+    private javax.swing.JComboBox<String> comboOrdenar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblBuscar;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextArea txtTexto;
     // End of variables declaration//GEN-END:variables
 }
