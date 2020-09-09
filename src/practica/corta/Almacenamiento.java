@@ -21,7 +21,20 @@ public class Almacenamiento {
             Datos dato = new Datos(datos[0], datos[1], datos[2], datos[3]);
             listDatos.add(dato);
         }
+        ordenamientoAlfabetico(listDatos);
         return listDatos;
+    }
+    
+    public void ordenamientoAlfabetico(ArrayList<Datos> listDatos){
+        for (int i = 0; i < listDatos.size()-1; i++) {
+            for (int j = 0; j < listDatos.size()-1; j++) {
+                if(listDatos.get(j).getNombre().compareTo(listDatos.get(j+1).getNombre()) > 0){
+                    Datos aux = listDatos.get(j);
+                    listDatos.set(j, listDatos.get(j+1));
+                    listDatos.set(j+1, aux);
+                }
+            }
+        }
     }
     
 }

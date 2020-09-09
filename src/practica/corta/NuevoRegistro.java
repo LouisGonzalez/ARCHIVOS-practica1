@@ -8,6 +8,7 @@ package practica.corta;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+
 /**
  *
  * @author luisGonzalez
@@ -18,7 +19,7 @@ public class NuevoRegistro extends javax.swing.JDialog {
     private JTextArea cajaTexto;
     private String texto = "";
     private ArrayList<Datos> listDatos;
-    
+
     /**
      * Creates new form NuevoRegistro
      */
@@ -96,19 +97,25 @@ public class NuevoRegistro extends javax.swing.JDialog {
         ArrayList<Datos> aux = new ArrayList<>();
         datos = txtDatos.getText().split("\\|");
         texto = datos[0] + "|" + datos[1] + "|" + datos[2] + "|" + datos[3];
-        Inicio.textoOficial += texto+"\n";
+        Inicio.textoOficial += texto + "\n";
         Almacenamiento almacenaje = new Almacenamiento();
         aux = almacenaje.ordenamientoDatos(Inicio.textoOficial, aux);
+        almacenaje.ordenamientoAlfabetico(aux);
         listDatos.clear();
         for (int i = 0; i < aux.size(); i++) {
             listDatos.add(aux.get(i));
         }
         aux.clear();
+        Inicio.textoOficial = "";
+        for (int i = 0; i < listDatos.size(); i++) {
+            Inicio.textoOficial += listDatos.get(i).getNombre() + "," + listDatos.get(i).getNumero() + "," + listDatos.get(i).getRedSocial1() + "," + listDatos.get(i).getRedSocial2() + "\n";
+        }
+        cajaTexto.setText(Inicio.textoOficial);
+
         cajaTexto.setText(Inicio.textoOficial);
         this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;

@@ -53,6 +53,7 @@ public class Inicio extends javax.swing.JFrame {
         comboOrdenar = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         btnOrdenar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,12 +111,19 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Eliminar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -143,7 +151,9 @@ public class Inicio extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(72, 72, 72)
-                                .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(39, 39, 39))))
         );
@@ -167,10 +177,12 @@ public class Inicio extends javax.swing.JFrame {
                     .addComponent(comboOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(btnOrdenar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnGuardar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNuevo)
-                    .addComponent(btnGuardar))
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -203,9 +215,13 @@ public class Inicio extends javax.swing.JFrame {
                 String texto = "";
                 texto = archivo.leerArchivo(titulo);
                 textoOficial = texto;
-                txtTexto.setText(texto);
                 Almacenamiento almacenaje = new Almacenamiento();
                 listDatos = almacenaje.ordenamientoDatos(texto, listDatos);
+                String texto2 = "";
+                for (int i = 0; i < listDatos.size(); i++) {
+                    texto2 += listDatos.get(i).getNombre() + "," + listDatos.get(i).getNumero() + "," + listDatos.get(i).getRedSocial1() + "," + listDatos.get(i).getRedSocial2() + "\n";
+                }
+                txtTexto.setText(texto2);
             } else {
                 JOptionPane.showMessageDialog(null, "No es posible abrir este tipo de texto");
 
@@ -219,6 +235,13 @@ public class Inicio extends javax.swing.JFrame {
             CrearArchivo creacion = new CrearArchivo(null, true);
             creacion.setVisible(true);
         } else {
+            for (int i = 0; i < listDatos.size(); i++) {
+
+            }
+            textoOficial = "";
+            for (int i = 0; i < listDatos.size(); i++) {
+                textoOficial += listDatos.get(i).getNombre() + "|" + listDatos.get(i).getNumero() + "|" + listDatos.get(i).getRedSocial1() + "|" + listDatos.get(i).getRedSocial2() + "\n";
+            }
             archivo.guardarArchivo2(textoOficial, binarioActual);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -267,8 +290,8 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
         if (comboOrdenar.getSelectedItem().equals("Nombre")) {
-            for (int i = 0; i < listDatos.size()-1; i++) {
-                for (int j = 0; j < listDatos.size()-1; j++) {
+            for (int i = 0; i < listDatos.size() - 1; i++) {
+                for (int j = 0; j < listDatos.size() - 1; j++) {
                     if (listDatos.get(j).getNombre().compareTo(listDatos.get(j + 1).getNombre()) > 0) {
                         Datos aux = listDatos.get(j);
                         listDatos.set(j, listDatos.get(j + 1));
@@ -277,8 +300,8 @@ public class Inicio extends javax.swing.JFrame {
                 }
             }
         } else if (comboOrdenar.getSelectedItem().equals("Telefono")) {
-            for (int i = 0; i < listDatos.size()-1; i++) {
-                for (int j = 0; j < listDatos.size()-1; j++) {
+            for (int i = 0; i < listDatos.size() - 1; i++) {
+                for (int j = 0; j < listDatos.size() - 1; j++) {
                     if (listDatos.get(j).getNumero().compareTo(listDatos.get(j + 1).getNumero()) > 0) {
                         Datos aux = listDatos.get(j);
                         listDatos.set(j, listDatos.get(j + 1));
@@ -287,8 +310,8 @@ public class Inicio extends javax.swing.JFrame {
                 }
             }
         } else if (comboOrdenar.getSelectedItem().equals("Red Social 1")) {
-            for (int i = 0; i < listDatos.size()-1; i++) {
-                for (int j = 0; j < listDatos.size()-1; j++) {
+            for (int i = 0; i < listDatos.size() - 1; i++) {
+                for (int j = 0; j < listDatos.size() - 1; j++) {
                     if (listDatos.get(j).getRedSocial1().compareTo(listDatos.get(j + 1).getRedSocial1()) > 0) {
                         Datos aux = listDatos.get(j);
                         listDatos.set(j, listDatos.get(j + 1));
@@ -297,8 +320,8 @@ public class Inicio extends javax.swing.JFrame {
                 }
             }
         } else if (comboOrdenar.getSelectedItem().equals("Red Social 2")) {
-            for (int i = 0; i < listDatos.size()-1; i++) {
-                for (int j = 0; j < listDatos.size()-1; j++) {
+            for (int i = 0; i < listDatos.size() - 1; i++) {
+                for (int j = 0; j < listDatos.size() - 1; j++) {
                     if (listDatos.get(j).getRedSocial2().compareTo(listDatos.get(j + 1).getRedSocial2()) > 0) {
                         Datos aux = listDatos.get(j);
                         listDatos.set(j, listDatos.get(j + 1));
@@ -309,10 +332,17 @@ public class Inicio extends javax.swing.JFrame {
         }
         textoOficial = "";
         for (int i = 0; i < listDatos.size(); i++) {
-            textoOficial += listDatos.get(i).getNombre()+"|"+listDatos.get(i).getNumero()+"|"+listDatos.get(i).getRedSocial1()+"|"+listDatos.get(i).getRedSocial2()+"\n";
+            textoOficial += listDatos.get(i).getNombre() + "|" + listDatos.get(i).getNumero() + "|" + listDatos.get(i).getRedSocial1() + "|" + listDatos.get(i).getRedSocial2() + "\n";
         }
         txtTexto.setText(textoOficial);
     }//GEN-LAST:event_btnOrdenarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Eliminacion eliminar = new Eliminacion(null, true, listDatos, txtTexto);
+        eliminar.setVisible(true);
+
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -324,6 +354,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JButton btnOrdenar;
     private javax.swing.JComboBox<String> comboBusqueda;
     private javax.swing.JComboBox<String> comboOrdenar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblBuscar;
